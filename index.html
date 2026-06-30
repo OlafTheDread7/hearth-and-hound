@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Hearth &amp; Hound — Calm, Comfort &amp; Care for the Dog You Love</title>
+<meta name="description" content="Premium calming and orthopedic comfort for dogs. Vet-informed beds, calming chews, and wellness essentials. Free shipping over $50." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --cream:#faf6ef; --sand:#f1e8da; --ink:#2c2620; --muted:#6f6457;
+    --moss:#5a6b4f; --moss-dk:#41503a; --clay:#c0794f; --clay-dk:#a8633c;
+    --line:#e4d9c8; --white:#fffdf9; --shadow:0 10px 40px rgba(60,48,32,.10);
+    --radius:18px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Inter',system-ui,sans-serif;color:var(--ink);background:var(--cream);line-height:1.6;-webkit-font-smoothing:antialiased}
+  h1,h2,h3,.serif{font-family:'Fraunces',Georgia,serif;font-weight:500;line-height:1.12;letter-spacing:-.01em}
+  a{color:inherit;text-decoration:none}
+  img,svg{display:block;max-width:100%}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:none;cursor:pointer;font-family:inherit;font-weight:600;font-size:15px;padding:13px 24px;border-radius:100px;transition:.18s;text-align:center}
+  .btn-primary{background:var(--clay);color:#fff}
+  .btn-primary:hover{background:var(--clay-dk);transform:translateY(-1px)}
+  .btn-dark{background:var(--ink);color:#fff}
+  .btn-dark:hover{background:#1c1813}
+  .btn-ghost{background:transparent;border:1.5px solid var(--ink);color:var(--ink)}
+  .btn-ghost:hover{background:var(--ink);color:#fff}
+  .btn-block{width:100%}
+  .eyebrow{font-size:12.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--clay)}
+
+  /* announce */
+  .announce{background:var(--moss-dk);color:#f3efe6;text-align:center;font-size:13px;padding:9px 16px;letter-spacing:.02em}
+  .announce strong{font-weight:600}
+
+  /* header */
+  header{position:sticky;top:0;z-index:50;background:rgba(250,246,239,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:70px}
+  .logo{font-family:'Fraunces',serif;font-size:24px;font-weight:600;letter-spacing:-.02em;display:flex;align-items:center;gap:9px}
+  .logo .mark{width:30px;height:30px;flex:0 0 auto}
+  .nav-links{display:flex;gap:30px;font-size:15px;font-weight:500}
+  .nav-links a{color:var(--muted);transition:.15s}
+  .nav-links a:hover{color:var(--ink)}
+  .nav-right{display:flex;align-items:center;gap:10px}
+  .cart-btn{position:relative;background:none;border:none;cursor:pointer;padding:8px;color:var(--ink)}
+  .cart-count{position:absolute;top:-1px;right:-3px;background:var(--clay);color:#fff;font-size:11px;font-weight:600;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Inter'}
+  .menu-toggle{display:none;background:none;border:none;cursor:pointer;padding:8px;color:var(--ink)}
+
+  /* hero */
+  .hero{position:relative;overflow:hidden}
+  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:50px;align-items:center;padding:72px 0 80px}
+  .hero h1{font-size:clamp(40px,5.4vw,68px);margin:18px 0 20px}
+  .hero p.lead{font-size:18.5px;color:var(--muted);max-width:470px;margin-bottom:30px}
+  .hero-cta{display:flex;gap:14px;flex-wrap:wrap}
+  .hero-stats{display:flex;gap:34px;margin-top:38px}
+  .hero-stats .s b{font-family:'Fraunces',serif;font-size:26px;font-weight:600;display:block}
+  .hero-stats .s span{font-size:13px;color:var(--muted)}
+  .hero-art{position:relative;aspect-ratio:1/1;border-radius:28px;background:linear-gradient(150deg,#e9ddc8,#dfe5d6);box-shadow:var(--shadow);overflow:hidden;display:flex;align-items:center;justify-content:center}
+  .hero-art svg{width:78%}
+  .hero-badge{position:absolute;bottom:20px;left:20px;background:var(--white);border-radius:14px;padding:12px 16px;box-shadow:var(--shadow);display:flex;align-items:center;gap:10px;font-size:13px;font-weight:600}
+  .hero-badge .dot{width:34px;height:34px;border-radius:50%;background:var(--moss);color:#fff;display:flex;align-items:center;justify-content:center;font-size:16px}
+
+  /* trust bar */
+  .trust{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--sand)}
+  .trust-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;padding:22px 0}
+  .trust-item{display:flex;align-items:center;gap:12px;font-size:14px;font-weight:500;justify-content:center}
+  .trust-item .ic{color:var(--moss);flex:0 0 auto}
+
+  /* sections */
+  section{padding:78px 0}
+  .sec-head{text-align:center;max-width:620px;margin:0 auto 48px}
+  .sec-head h2{font-size:clamp(30px,3.6vw,44px);margin:12px 0 14px}
+  .sec-head p{color:var(--muted);font-size:17px}
+
+  /* products */
+  .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:26px}
+  .card{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;transition:.2s;display:flex;flex-direction:column;cursor:pointer}
+  .card:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:var(--clay)}
+  .card-img{aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;position:relative}
+  .card-img svg{width:66%}
+  .tag{position:absolute;top:12px;left:12px;background:var(--ink);color:#fff;font-size:11px;font-weight:600;padding:5px 10px;border-radius:100px;letter-spacing:.03em}
+  .tag.best{background:var(--clay)}
+  .tag.new{background:var(--moss)}
+  .card-body{padding:18px 18px 20px;display:flex;flex-direction:column;flex:1}
+  .card-body h3{font-size:18px;font-weight:600;margin-bottom:4px}
+  .card-cat{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:9px}
+  .stars{color:var(--clay);font-size:13px;margin-bottom:12px;letter-spacing:1px}
+  .stars span{color:var(--muted);letter-spacing:0;margin-left:5px}
+  .card-foot{margin-top:auto;display:flex;align-items:center;justify-content:space-between}
+  .price{font-family:'Fraunces',serif;font-size:21px;font-weight:600}
+  .price s{color:var(--muted);font-size:14px;font-weight:400;margin-right:6px;font-family:'Inter'}
+  .add{background:var(--sand);border:none;width:42px;height:42px;border-radius:50%;cursor:pointer;font-size:22px;color:var(--ink);transition:.15s;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .add:hover{background:var(--clay);color:#fff}
+
+  /* feature split */
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+  .split-art{aspect-ratio:4/3;border-radius:24px;background:linear-gradient(150deg,#dfe5d6,#ece1cd);display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow)}
+  .split-art svg{width:60%}
+  .split h2{font-size:clamp(28px,3.4vw,40px);margin:14px 0 18px}
+  .split p{color:var(--muted);font-size:16.5px;margin-bottom:18px}
+  .checks{list-style:none;display:flex;flex-direction:column;gap:13px;margin-bottom:26px}
+  .checks li{display:flex;gap:12px;align-items:flex-start;font-size:15.5px}
+  .checks .ck{width:24px;height:24px;border-radius:50%;background:var(--moss);color:#fff;flex:0 0 auto;display:flex;align-items:center;justify-content:center;font-size:13px;margin-top:1px}
+
+  /* testimonials */
+  .tst{background:var(--moss-dk);color:#f3efe6}
+  .tst .sec-head h2{color:#fff}
+  .tst .sec-head p{color:#cdd4c2}
+  .tst .eyebrow{color:#d9b48f}
+  .tgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .quote{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:var(--radius);padding:28px}
+  .quote .stars{color:#e7b888;margin-bottom:14px}
+  .quote p{font-size:15.5px;color:#eee6d8;margin-bottom:18px}
+  .quote .who{display:flex;align-items:center;gap:12px}
+  .quote .av{width:42px;height:42px;border-radius:50%;background:var(--clay);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:600;font-family:'Fraunces',serif}
+  .quote .who b{font-size:14px;display:block}
+  .quote .who span{font-size:12.5px;color:#bcc3ad}
+
+  /* newsletter */
+  .news{text-align:center}
+  .news-box{background:var(--sand);border-radius:28px;padding:56px 28px;max-width:720px;margin:0 auto}
+  .news h2{font-size:clamp(28px,3.4vw,40px);margin:12px 0 12px}
+  .news p{color:var(--muted);margin-bottom:26px;font-size:16.5px}
+  .news form{display:flex;gap:10px;max-width:440px;margin:0 auto}
+  .news input{flex:1;padding:14px 18px;border:1.5px solid var(--line);border-radius:100px;font-family:inherit;font-size:15px;background:#fff}
+  .news input:focus{outline:none;border-color:var(--clay)}
+
+  /* footer */
+  footer{background:var(--ink);color:#d8cfc1;padding:60px 0 28px;font-size:14.5px}
+  .foot-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:40px;padding-bottom:40px;border-bottom:1px solid rgba(255,255,255,.1)}
+  footer .logo{color:#fff;margin-bottom:14px}
+  footer p.fdesc{color:#a89e8f;max-width:280px}
+  footer h4{color:#fff;font-size:14px;font-weight:600;margin-bottom:16px;letter-spacing:.02em}
+  footer ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+  footer ul a{color:#a89e8f;transition:.15s}
+  footer ul a:hover{color:#fff}
+  .foot-bot{display:flex;justify-content:space-between;align-items:center;padding-top:24px;color:#8c8273;font-size:13px;flex-wrap:wrap;gap:10px}
+
+  /* cart drawer */
+  .overlay{position:fixed;inset:0;background:rgba(30,24,18,.45);opacity:0;visibility:hidden;transition:.25s;z-index:90}
+  .overlay.open{opacity:1;visibility:visible}
+  .drawer{position:fixed;top:0;right:0;height:100%;width:420px;max-width:92vw;background:var(--cream);z-index:100;transform:translateX(100%);transition:.3s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;box-shadow:-10px 0 40px rgba(0,0,0,.15)}
+  .drawer.open{transform:translateX(0)}
+  .drawer-head{display:flex;align-items:center;justify-content:space-between;padding:22px 24px;border-bottom:1px solid var(--line)}
+  .drawer-head h3{font-size:20px}
+  .x{background:none;border:none;cursor:pointer;font-size:26px;line-height:1;color:var(--muted)}
+  .drawer-body{flex:1;overflow-y:auto;padding:8px 24px}
+  .citem{display:flex;gap:14px;padding:18px 0;border-bottom:1px solid var(--line)}
+  .citem-img{width:72px;height:72px;border-radius:12px;background:var(--sand);flex:0 0 auto;display:flex;align-items:center;justify-content:center}
+  .citem-img svg{width:64%}
+  .citem-info{flex:1;min-width:0}
+  .citem-info h4{font-size:15px;font-weight:600;margin-bottom:2px}
+  .citem-info .cprice{font-size:14px;color:var(--muted)}
+  .qty{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:100px;margin-top:8px;background:#fff}
+  .qty button{background:none;border:none;width:28px;height:28px;cursor:pointer;font-size:16px;color:var(--ink)}
+  .qty span{width:26px;text-align:center;font-size:14px;font-weight:600}
+  .citem-rm{background:none;border:none;color:var(--muted);font-size:12px;cursor:pointer;text-decoration:underline;margin-top:6px;display:block}
+  .empty{text-align:center;color:var(--muted);padding:60px 20px}
+  .empty svg{width:70px;margin:0 auto 16px;opacity:.5}
+  .drawer-foot{padding:22px 24px;border-top:1px solid var(--line);background:var(--white)}
+  .sub-row{display:flex;justify-content:space-between;font-size:15px;margin-bottom:6px;color:var(--muted)}
+  .sub-row.total{font-size:18px;color:var(--ink);font-weight:600;margin:12px 0 4px}
+  .sub-row.total b{font-family:'Fraunces',serif}
+  .ship-note{font-size:12.5px;color:var(--moss);margin-bottom:16px}
+
+  /* modal */
+  .modal-wrap{position:fixed;inset:0;z-index:110;display:flex;align-items:center;justify-content:center;padding:24px;opacity:0;visibility:hidden;transition:.22s}
+  .modal-wrap.open{opacity:1;visibility:visible}
+  .modal{background:var(--cream);border-radius:24px;max-width:840px;width:100%;max-height:90vh;overflow:auto;display:grid;grid-template-columns:1fr 1fr;position:relative}
+  .modal .x{position:absolute;top:14px;right:18px;z-index:2}
+  .modal-art{background:linear-gradient(150deg,#e9ddc8,#dfe5d6);display:flex;align-items:center;justify-content:center;padding:30px;min-height:280px}
+  .modal-art svg{width:74%}
+  .modal-info{padding:38px 34px}
+  .modal-info .card-cat{margin-bottom:8px}
+  .modal-info h2{font-size:28px;margin-bottom:8px}
+  .modal-info .stars{margin-bottom:16px}
+  .modal-info .mprice{font-family:'Fraunces',serif;font-size:26px;font-weight:600;margin-bottom:16px}
+  .modal-info .mdesc{color:var(--muted);font-size:15px;margin-bottom:22px}
+  .modal-info .feat{list-style:none;display:flex;flex-direction:column;gap:9px;margin-bottom:26px}
+  .modal-info .feat li{display:flex;gap:10px;font-size:14.5px;align-items:center}
+  .modal-info .feat .ck{color:var(--moss);font-weight:700}
+
+  .toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(120px);background:var(--ink);color:#fff;padding:14px 24px;border-radius:100px;font-size:14.5px;font-weight:500;z-index:200;transition:.3s;box-shadow:var(--shadow);display:flex;gap:10px;align-items:center}
+  .toast.show{transform:translateX(-50%) translateY(0)}
+
+  @media(max-width:920px){
+    .hero-grid{grid-template-columns:1fr;gap:36px;padding:48px 0 56px}
+    .hero-art{max-width:440px}
+    .grid{grid-template-columns:repeat(2,1fr)}
+    .trust-grid{grid-template-columns:repeat(2,1fr)}
+    .split{grid-template-columns:1fr;gap:32px}
+    .tgrid{grid-template-columns:1fr}
+    .foot-grid{grid-template-columns:1fr 1fr}
+    .modal{grid-template-columns:1fr;max-height:88vh}
+    .nav-links{display:none}
+    .menu-toggle{display:block}
+  }
+  @media(max-width:520px){
+    .grid{grid-template-columns:1fr 1fr;gap:16px}
+    .hero-stats{gap:22px}
+    .news form{flex-direction:column}
+  }
+</style>
+</head>
+<body>
+
+<div class="announce">🐾 Free shipping on orders over <strong>$50</strong> · 30-night risk-free comfort guarantee</div>
+
+<header>
+  <div class="wrap nav">
+    <a href="#top" class="logo">
+      <svg class="mark" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="20" fill="#5a6b4f"/><path d="M13 17c0-3.3 3.1-6 7-6s7 2.7 7 6c0 2.4-1.6 3.8-2.8 4.9-1 .9-1.7 1.6-1.7 2.8 0 .7-.6 1.3-1.3 1.3h-2.4c-.7 0-1.3-.6-1.3-1.3 0-1.2-.7-1.9-1.7-2.8C14.6 20.8 13 19.4 13 17Z" fill="#fff"/><circle cx="20" cy="30" r="1.8" fill="#fff"/></svg>
+      Hearth &amp; Hound
+    </a>
+    <nav class="nav-links">
+      <a href="#shop">Shop</a>
+      <a href="#why">Why Us</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#about">About</a>
+    </nav>
+    <div class="nav-right">
+      <a href="#shop" class="btn btn-ghost" style="padding:10px 18px">Shop All</a>
+      <button class="cart-btn" onclick="openCart()" aria-label="Cart">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 6h15l-1.5 9h-12L6 6Z"/><path d="M6 6 5 3H2"/><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/></svg>
+        <span class="cart-count" id="cartCount">0</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div id="top"></div>
+
+<!-- HERO -->
+<section class="hero" style="padding:0">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">Calm · Comfort · Care</div>
+      <h1>Help your dog feel safe, settled, and truly at home.</h1>
+      <p class="lead">Vet-informed orthopedic beds, calming chews, and anxiety-easing essentials — thoughtfully designed for the dog who deserves the world.</p>
+      <div class="hero-cta">
+        <a href="#shop" class="btn btn-primary">Shop best sellers</a>
+        <a href="#why" class="btn btn-ghost">Why Hearth &amp; Hound</a>
+      </div>
+      <div class="hero-stats">
+        <div class="s"><b>40,000+</b><span>happy dogs</span></div>
+        <div class="s"><b>4.8★</b><span>2,900+ reviews</span></div>
+        <div class="s"><b>30 nights</b><span>risk-free</span></div>
+      </div>
+    </div>
+    <div class="hero-art">
+      <svg viewBox="0 0 200 200" fill="none">
+        <ellipse cx="100" cy="150" rx="78" ry="20" fill="#c9b89a" opacity=".5"/>
+        <path d="M44 150c0-30 24-46 56-46s56 16 56 46" fill="#a8633c"/>
+        <path d="M52 150c0-24 21-37 48-37s48 13 48 37" fill="#c0794f"/>
+        <ellipse cx="100" cy="150" rx="40" ry="9" fill="#a8633c" opacity=".5"/>
+        <g>
+          <ellipse cx="100" cy="118" rx="34" ry="30" fill="#6b5a45"/>
+          <ellipse cx="100" cy="128" rx="22" ry="18" fill="#8a755a"/>
+          <path d="M70 96c-6-14-3-26 4-25 6 1 10 12 9 24l-13 1Z" fill="#6b5a45"/>
+          <path d="M130 96c6-14 3-26-4-25-6 1-10 12-9 24l13 1Z" fill="#6b5a45"/>
+          <circle cx="89" cy="116" r="3.4" fill="#2c2620"/>
+          <circle cx="111" cy="116" r="3.4" fill="#2c2620"/>
+          <ellipse cx="100" cy="128" rx="5" ry="3.6" fill="#2c2620"/>
+          <path d="M100 131c0 4-3 6-7 6m7-6c0 4 3 6 7 6" stroke="#2c2620" stroke-width="1.6" fill="none"/>
+        </g>
+        <circle cx="148" cy="70" r="11" fill="#fffdf9" opacity=".9"/>
+        <path d="M143 70l3.4 3.4L153 67" stroke="#5a6b4f" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div class="hero-badge"><span class="dot">✓</span> Vet-informed design</div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST -->
+<div class="trust">
+  <div class="wrap trust-grid">
+    <div class="trust-item"><span class="ic">🚚</span> Free shipping over $50</div>
+    <div class="trust-item"><span class="ic">🌙</span> 30-night comfort trial</div>
+    <div class="trust-item"><span class="ic">🩺</span> Vet-informed materials</div>
+    <div class="trust-item"><span class="ic">↩️</span> Easy, no-fuss returns</div>
+  </div>
+</div>
+
+<!-- SHOP -->
+<section id="shop">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">The Collection</div>
+      <h2>Best sellers, loved by dogs &amp; their people</h2>
+      <p>Everything we make is built around one goal: a calmer, more comfortable life for your best friend.</p>
+    </div>
+    <div class="grid" id="productGrid"></div>
+  </div>
+</section>
+
+<!-- WHY / FEATURE SPLIT -->
+<section id="why" style="background:var(--sand)">
+  <div class="wrap split">
+    <div class="split-art">
+      <svg viewBox="0 0 200 160" fill="none">
+        <rect x="30" y="60" width="140" height="74" rx="16" fill="#5a6b4f"/>
+        <rect x="42" y="72" width="116" height="52" rx="10" fill="#7d8c70"/>
+        <ellipse cx="100" cy="98" rx="30" ry="22" fill="#6b5a45"/>
+        <path d="M78 84c-4-10-2-18 3-17 4 1 7 8 6 17l-9 0Z" fill="#6b5a45"/>
+        <path d="M122 84c4-10 2-18-3-17-4 1-7 8-6 17l9 0Z" fill="#6b5a45"/>
+        <circle cx="92" cy="96" r="2.6" fill="#2c2620"/><circle cx="108" cy="96" r="2.6" fill="#2c2620"/>
+        <ellipse cx="100" cy="105" rx="3.6" ry="2.6" fill="#2c2620"/>
+        <path d="M64 40c2-6 8-6 10 0M126 40c2-6 8-6 10 0" stroke="#c0794f" stroke-width="3" stroke-linecap="round"/>
+        <text x="100" y="30" font-size="13" fill="#c0794f" text-anchor="middle">z z Z</text>
+      </svg>
+    </div>
+    <div>
+      <div class="eyebrow">Why Hearth &amp; Hound</div>
+      <h2>Comfort backed by science, made with love.</h2>
+      <p>Anxiety, restlessness, and aching joints affect more dogs than most owners realize. We partner with veterinary advisors to design products that actually help — not just look good.</p>
+      <ul class="checks">
+        <li><span class="ck">✓</span> CertiPUR-US® orthopedic memory foam that supports aging joints</li>
+        <li><span class="ck">✓</span> Calming formulas with organic hemp, chamomile &amp; L-theanine</li>
+        <li><span class="ck">✓</span> Machine-washable, chew-resistant, and built to last</li>
+        <li><span class="ck">✓</span> 1% of every order supports shelter dogs</li>
+      </ul>
+      <a href="#shop" class="btn btn-dark">Find your dog's essentials</a>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews" class="tst">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Tail-wagging reviews</div>
+      <h2>40,000 dogs sleep better tonight</h2>
+      <p>Real words from the people who know their dogs best.</p>
+    </div>
+    <div class="tgrid">
+      <div class="quote">
+        <div class="stars">★★★★★</div>
+        <p>"My 11-year-old lab used to struggle getting comfortable at night. The orthopedic bed changed everything — she's sleeping through the night for the first time in years."</p>
+        <div class="who"><div class="av">M</div><div><b>Maya R.</b><span>Portland, OR · Verified buyer</span></div></div>
+      </div>
+      <div class="quote">
+        <div class="stars">★★★★★</div>
+        <p>"The calming chews are a lifesaver during thunderstorms. Our rescue pup finally stops shaking and actually relaxes. We reorder every month now."</p>
+        <div class="who"><div class="av">J</div><div><b>James &amp; Cooper</b><span>Austin, TX · Verified buyer</span></div></div>
+      </div>
+      <div class="quote">
+        <div class="stars">★★★★★</div>
+        <p>"Beautiful quality and it doesn't look like ugly pet gear in our living room. The donut bed is the coziest thing we own — honestly tempted to use it myself."</p>
+        <div class="who"><div class="av">S</div><div><b>Sofia L.</b><span>Brooklyn, NY · Verified buyer</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="wrap split">
+    <div>
+      <div class="eyebrow">Our story</div>
+      <h2>Started by dog people, for dog people.</h2>
+      <p>Hearth &amp; Hound began with a senior beagle named Biscuit and a simple frustration: why was it so hard to find pet products that were genuinely good for dogs <em>and</em> beautiful enough to live with?</p>
+      <p>So we built the brand we wished existed — comfort-first, vet-informed, and obsessively tested by the pickiest critics around: our own dogs. Every product earns its place by making a real difference in a dog's day.</p>
+      <a href="#shop" class="btn btn-primary">Shop the collection</a>
+    </div>
+    <div class="split-art" style="background:linear-gradient(150deg,#ece1cd,#dfe5d6)">
+      <svg viewBox="0 0 200 160" fill="none">
+        <circle cx="70" cy="80" r="34" fill="#c0794f"/>
+        <ellipse cx="70" cy="82" rx="22" ry="18" fill="#e3b48c"/>
+        <path d="M50 60c-4-10-1-18 4-16 4 2 6 9 4 17l-8-1Z" fill="#c0794f"/>
+        <path d="M90 60c4-10 1-18-4-16-4 2-6 9-4 17l8-1Z" fill="#c0794f"/>
+        <circle cx="63" cy="80" r="2.8" fill="#2c2620"/><circle cx="77" cy="80" r="2.8" fill="#2c2620"/>
+        <ellipse cx="70" cy="89" rx="3.6" ry="2.6" fill="#2c2620"/>
+        <circle cx="132" cy="86" r="28" fill="#6b5a45"/>
+        <ellipse cx="132" cy="88" rx="18" ry="15" fill="#8a755a"/>
+        <path d="M116 70c-3-8-1-15 3-13 3 1 5 7 4 14l-7-1Z" fill="#6b5a45"/>
+        <path d="M148 70c3-8 1-15-3-13-3 1-5 7-4 14l7-1Z" fill="#6b5a45"/>
+        <circle cx="126" cy="86" r="2.4" fill="#2c2620"/><circle cx="138" cy="86" r="2.4" fill="#2c2620"/>
+        <ellipse cx="132" cy="93" rx="3" ry="2.2" fill="#2c2620"/>
+        <path d="M40 130h120" stroke="#5a6b4f" stroke-width="5" stroke-linecap="round"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="news" style="background:var(--cream)">
+  <div class="wrap">
+    <div class="news-box">
+      <div class="eyebrow">Join the pack</div>
+      <h2>Get 10% off your first order</h2>
+      <p>Plus calm-dog tips, early access to new drops, and the occasional very good boy.</p>
+      <form onsubmit="subscribe(event)">
+        <input type="email" placeholder="you@email.com" required />
+        <button class="btn btn-primary" type="submit">Get my code</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="logo">
+          <svg class="mark" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="20" fill="#5a6b4f"/><path d="M13 17c0-3.3 3.1-6 7-6s7 2.7 7 6c0 2.4-1.6 3.8-2.8 4.9-1 .9-1.7 1.6-1.7 2.8 0 .7-.6 1.3-1.3 1.3h-2.4c-.7 0-1.3-.6-1.3-1.3 0-1.2-.7-1.9-1.7-2.8C14.6 20.8 13 19.4 13 17Z" fill="#fff"/><circle cx="20" cy="30" r="1.8" fill="#fff"/></svg>
+          Hearth &amp; Hound
+        </div>
+        <p class="fdesc">Calm, comfort, and care for the dog you love. Vet-informed essentials, designed to be lived with.</p>
+      </div>
+      <div>
+        <h4>Shop</h4>
+        <ul>
+          <li><a href="#shop">Beds &amp; Comfort</a></li>
+          <li><a href="#shop">Calming &amp; Wellness</a></li>
+          <li><a href="#shop">Grooming</a></li>
+          <li><a href="#shop">Tech &amp; Safety</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Support</h4>
+        <ul>
+          <li><a href="#">Shipping &amp; Returns</a></li>
+          <li><a href="#">30-Night Guarantee</a></li>
+          <li><a href="#">Track Your Order</a></li>
+          <li><a href="#">Contact Us</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#about">Our Story</a></li>
+          <li><a href="#">Sustainability</a></li>
+          <li><a href="#">Giving Back</a></li>
+          <li><a href="#">Wholesale</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bot">
+      <span>© 2026 Hearth &amp; Hound. All rights reserved.</span>
+      <span>Privacy · Terms · Made with 🐾 for good dogs</span>
+    </div>
+  </div>
+</footer>
+
+<!-- CART DRAWER -->
+<div class="overlay" id="overlay" onclick="closeCart()"></div>
+<aside class="drawer" id="drawer" aria-label="Shopping cart">
+  <div class="drawer-head">
+    <h3>Your cart</h3>
+    <button class="x" onclick="closeCart()" aria-label="Close">×</button>
+  </div>
+  <div class="drawer-body" id="cartBody"></div>
+  <div class="drawer-foot" id="cartFoot" style="display:none">
+    <div class="ship-note" id="shipNote"></div>
+    <div class="sub-row"><span>Subtotal</span><span id="subtotal">$0</span></div>
+    <div class="sub-row total"><span>Total</span><b id="total">$0</b></div>
+    <button class="btn btn-primary btn-block" style="margin-top:14px" onclick="checkout()">Checkout</button>
+  </div>
+</aside>
+
+<!-- PRODUCT MODAL -->
+<div class="modal-wrap" id="modalWrap" onclick="if(event.target===this)closeModal()">
+  <div class="modal" id="modalInner"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const SHIP_THRESHOLD = 50;
+const products = [
+  {id:'ortho', name:'Cloud Orthopedic Dog Bed', cat:'Beds & Comfort', price:129, was:169, tag:'best', rating:4.9, reviews:842,
+    desc:'Therapeutic CertiPUR-US® memory foam that cradles joints and pressure points — a true difference-maker for seniors and large breeds.',
+    feats:['4" solid orthopedic memory foam base','Waterproof inner liner','Machine-washable bolster cover','Non-slip grip bottom']},
+  {id:'donut', name:'Calming Donut Bed', cat:'Beds & Comfort', price:89, was:0, tag:'best', rating:4.8, reviews:1190,
+    desc:'A plush, faux-fur nest that mimics the security of a curled-up litter. The raised rim gives anxious dogs a sense of safety as they settle.',
+    feats:['Ultra-soft vegan faux fur','Self-warming recycled fill','Raised calming rim','Fully machine washable']},
+  {id:'vest', name:'Anti-Anxiety Wrap Vest', cat:'Calming & Wellness', price:39, was:49, tag:'', rating:4.6, reviews:0,
+    desc:'Gentle, constant pressure that works like a reassuring hug — easing storm, travel, and separation anxiety without medication.',
+    feats:['Adjustable snug fit','Breathable, lightweight fabric','Drug-free calming','Sizes XS–XXL']},
+  {id:'chews', name:'Calming Hemp Chews', cat:'Calming & Wellness', price:29, was:0, tag:'best', rating:4.7, reviews:2103,
+    desc:'Vet-formulated soft chews with organic hemp, chamomile, and L-theanine to take the edge off stressful moments.',
+    feats:['90 soft chews per jar','Organic hemp + chamomile','L-theanine & melatonin','Bacon flavor dogs love']},
+  {id:'lickmat', name:'Slow-Feed Lick Mat', cat:'Calming & Wellness', price:19, was:0, tag:'new', rating:4.7, reviews:0,
+    desc:'Turn mealtime into a calming ritual. Licking releases endorphins that soothe anxious dogs and slow fast eaters.',
+    feats:['Food-grade silicone','Strong suction base','Dishwasher safe','Great for crate training']},
+  {id:'blanket', name:'Self-Warming Snug Blanket', cat:'Beds & Comfort', price:34, was:44, tag:'', rating:4.8, reviews:0,
+    desc:'A reflective thermal core captures your dog\'s body heat for cozy warmth — no electricity needed.',
+    feats:['Reflective self-warming core','Plush sherpa top layer','Lightweight & portable','Machine washable']},
+  {id:'groom', name:'Pro Grooming Kit', cat:'Grooming', price:49, was:69, tag:'', rating:4.6, reviews:0,
+    desc:'A salon-quality, low-noise grooming set that keeps nervous dogs calm while you keep them looking their best.',
+    feats:['Whisper-quiet clippers','Self-cleaning deshedding brush','Nail grinder + guards','USB-C rechargeable']},
+  {id:'collar', name:'GPS Smart Collar', cat:'Tech & Safety', price:79, was:99, tag:'new', rating:4.5, reviews:0,
+    desc:'Real-time location tracking and activity monitoring, so your dog is always just a glance away on your phone.',
+    feats:['Live GPS tracking','Activity & sleep insights','14-day battery life','Waterproof IP67']},
+];
+// assign believable review counts
+const rc=[842,1190,564,2103,389,712,498,933];
+products.forEach((p,i)=>{p.reviews=rc[i];});
+
+const art = {
+  ortho:`<svg viewBox='0 0 120 120'><rect x='14' y='62' width='92' height='40' rx='12' fill='#5a6b4f'/><rect x='20' y='56' width='80' height='30' rx='14' fill='#7d8c70'/><ellipse cx='60' cy='74' rx='22' ry='15' fill='#6b5a45'/><path d='M44 62c-3-7-1-12 2-11 3 1 4 6 4 11l-6 0Z' fill='#6b5a45'/><path d='M76 62c3-7 1-12-2-11-3 1-4 6-4 11l6 0Z' fill='#6b5a45'/><circle cx='53' cy='72' r='2' fill='#2c2620'/><circle cx='67' cy='72' r='2' fill='#2c2620'/><ellipse cx='60' cy='79' rx='3' ry='2' fill='#2c2620'/></svg>`,
+  donut:`<svg viewBox='0 0 120 120'><ellipse cx='60' cy='78' rx='44' ry='30' fill='#c0794f'/><ellipse cx='60' cy='74' rx='30' ry='20' fill='#e3b48c'/><ellipse cx='60' cy='76' rx='22' ry='14' fill='#6b5a45'/><circle cx='53' cy='74' r='2.4' fill='#2c2620'/><circle cx='67' cy='74' r='2.4' fill='#2c2620'/><ellipse cx='60' cy='81' rx='3' ry='2' fill='#2c2620'/></svg>`,
+  vest:`<svg viewBox='0 0 120 120'><ellipse cx='60' cy='84' rx='30' ry='16' fill='#5a6b4f'/><rect x='40' y='60' width='40' height='30' rx='12' fill='#7d8c70'/><circle cx='60' cy='44' r='18' fill='#6b5a45'/><path d='M48 32c-2-6-1-10 2-9 2 1 3 5 3 9l-5 0Z' fill='#6b5a45'/><path d='M72 32c2-6 1-10-2-9-2 1-3 5-3 9l5 0Z' fill='#6b5a45'/><circle cx='55' cy='44' r='2' fill='#2c2620'/><circle cx='65' cy='44' r='2' fill='#2c2620'/><ellipse cx='60' cy='50' rx='2.6' ry='1.8' fill='#2c2620'/></svg>`,
+  chews:`<svg viewBox='0 0 120 120'><rect x='38' y='44' width='44' height='52' rx='8' fill='#5a6b4f'/><rect x='42' y='38' width='36' height='10' rx='4' fill='#41503a'/><circle cx='52' cy='66' r='5' fill='#c0794f'/><circle cx='68' cy='62' r='5' fill='#c0794f'/><circle cx='60' cy='78' r='5' fill='#c0794f'/><circle cx='52' cy='86' r='4' fill='#c0794f'/></svg>`,
+  lickmat:`<svg viewBox='0 0 120 120'><rect x='28' y='44' width='64' height='44' rx='10' fill='#5a6b4f'/><circle cx='44' cy='58' r='3' fill='#7d8c70'/><circle cx='60' cy='58' r='3' fill='#7d8c70'/><circle cx='76' cy='58' r='3' fill='#7d8c70'/><circle cx='44' cy='74' r='3' fill='#7d8c70'/><circle cx='60' cy='74' r='3' fill='#7d8c70'/><circle cx='76' cy='74' r='3' fill='#7d8c70'/></svg>`,
+  blanket:`<svg viewBox='0 0 120 120'><path d='M28 56c10-6 22-6 32 0s22 6 32 0v34c-10 6-22 6-32 0s-22-6-32 0Z' fill='#c0794f'/><path d='M28 56c10-6 22-6 32 0s22 6 32 0' stroke='#a8633c' stroke-width='3' fill='none'/><path d='M28 70c10-6 22-6 32 0s22 6 32 0' stroke='#a8633c' stroke-width='2' fill='none' opacity='.6'/></svg>`,
+  groom:`<svg viewBox='0 0 120 120'><rect x='46' y='40' width='28' height='40' rx='8' fill='#5a6b4f'/><rect x='52' y='30' width='16' height='14' rx='4' fill='#41503a'/><rect x='50' y='80' width='20' height='8' rx='3' fill='#c0794f'/><circle cx='60' cy='58' r='6' fill='#7d8c70'/></svg>`,
+  collar:`<svg viewBox='0 0 120 120'><circle cx='60' cy='60' r='30' fill='none' stroke='#5a6b4f' stroke-width='10'/><circle cx='60' cy='60' r='30' fill='none' stroke='#7d8c70' stroke-width='4'/><rect x='52' y='80' width='16' height='16' rx='4' fill='#c0794f'/><path d='M60 84v6m-4-3h8' stroke='#fff' stroke-width='1.6'/></svg>`,
+};
+
+let cart = {};
+
+function money(n){return '$'+n.toLocaleString()}
+function stars(r){const full=Math.round(r);return '★★★★★'.slice(0,full)+'☆☆☆☆☆'.slice(0,5-full);}
+
+function renderProducts(){
+  document.getElementById('productGrid').innerHTML = products.map(p=>`
+    <div class="card" onclick="openModal('${p.id}')">
+      <div class="card-img" style="background:linear-gradient(150deg,#efe4d1,#e2e7d8)">
+        ${p.tag?`<span class="tag ${p.tag}">${p.tag==='best'?'Best Seller':p.tag==='new'?'New':''}</span>`:''}
+        ${art[p.id]}
+      </div>
+      <div class="card-body">
+        <div class="card-cat">${p.cat}</div>
+        <h3>${p.name}</h3>
+        <div class="stars">${stars(p.rating)} <span>${p.rating} (${p.reviews})</span></div>
+        <div class="card-foot">
+          <div class="price">${p.was?`<s>${money(p.was)}</s>`:''}${money(p.price)}</div>
+          <button class="add" onclick="event.stopPropagation();addToCart('${p.id}')" aria-label="Add">+</button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+function openModal(id){
+  const p=products.find(x=>x.id===id);
+  document.getElementById('modalInner').innerHTML=`
+    <button class="x" onclick="closeModal()">×</button>
+    <div class="modal-art">${art[p.id]}</div>
+    <div class="modal-info">
+      <div class="card-cat">${p.cat}</div>
+      <h2>${p.name}</h2>
+      <div class="stars">${stars(p.rating)} <span>${p.rating} · ${p.reviews} reviews</span></div>
+      <div class="mprice">${p.was?`<s style="color:var(--muted);font-size:18px;font-weight:400;margin-right:8px">${money(p.was)}</s>`:''}${money(p.price)}</div>
+      <p class="mdesc">${p.desc}</p>
+      <ul class="feat">${p.feats.map(f=>`<li><span class="ck">✓</span> ${f}</li>`).join('')}</ul>
+      <button class="btn btn-primary btn-block" onclick="addToCart('${p.id}');closeModal()">Add to cart · ${money(p.price)}</button>
+    </div>`;
+  document.getElementById('modalWrap').classList.add('open');
+}
+function closeModal(){document.getElementById('modalWrap').classList.remove('open');}
+
+function addToCart(id){
+  cart[id]=(cart[id]||0)+1;
+  updateCart();
+  const p=products.find(x=>x.id===id);
+  showToast(`${p.name} added to cart`);
+}
+function removeFromCart(id){delete cart[id];updateCart();}
+function changeQty(id,d){cart[id]+=d;if(cart[id]<=0)delete cart[id];updateCart();}
+
+function updateCart(){
+  const ids=Object.keys(cart);
+  const count=ids.reduce((s,id)=>s+cart[id],0);
+  document.getElementById('cartCount').textContent=count;
+  const body=document.getElementById('cartBody');
+  const foot=document.getElementById('cartFoot');
+  if(ids.length===0){
+    body.innerHTML=`<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 6h15l-1.5 9h-12L6 6Z"/><path d="M6 6 5 3H2"/><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/></svg><p>Your cart is empty.<br>Let's find something cozy.</p></div>`;
+    foot.style.display='none';return;
+  }
+  body.innerHTML=ids.map(id=>{const p=products.find(x=>x.id===id);return`
+    <div class="citem">
+      <div class="citem-img">${art[id]}</div>
+      <div class="citem-info">
+        <h4>${p.name}</h4>
+        <div class="cprice">${money(p.price)}</div>
+        <div class="qty">
+          <button onclick="changeQty('${id}',-1)">−</button>
+          <span>${cart[id]}</span>
+          <button onclick="changeQty('${id}',1)">+</button>
+        </div>
+        <button class="citem-rm" onclick="removeFromCart('${id}')">Remove</button>
+      </div>
+      <div class="price" style="font-size:16px">${money(p.price*cart[id])}</div>
+    </div>`;}).join('');
+  const subtotal=ids.reduce((s,id)=>s+products.find(x=>x.id===id).price*cart[id],0);
+  document.getElementById('subtotal').textContent=money(subtotal);
+  document.getElementById('total').textContent=money(subtotal);
+  const note=document.getElementById('shipNote');
+  if(subtotal>=SHIP_THRESHOLD){note.textContent='🎉 You\'ve unlocked free shipping!';}
+  else{note.textContent=`Add ${money(SHIP_THRESHOLD-subtotal)} more for free shipping.`;}
+  foot.style.display='block';
+}
+
+function openCart(){document.getElementById('drawer').classList.add('open');document.getElementById('overlay').classList.add('open');}
+function closeCart(){document.getElementById('drawer').classList.remove('open');document.getElementById('overlay').classList.remove('open');}
+
+let toastTimer;
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.innerHTML=`<span>✓</span> ${msg}`;t.classList.add('show');
+  clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),2200);
+}
+function subscribe(e){e.preventDefault();e.target.reset();showToast('You\'re in! Check your inbox for 10% off.');}
+function checkout(){showToast('Demo store — connect a payment provider to go live.');}
+
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeCart();closeModal();}});
+renderProducts();
+updateCart();
+</script>
+</body>
+</html>
