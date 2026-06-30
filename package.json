@@ -1,0 +1,13 @@
+{
+  "name": "hearth-and-hound",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Hearth & Hound storefront with Stripe checkout and CJdropshipping fulfillment.",
+  "scripts": {
+    "dev": "vercel dev",
+    "deploy": "vercel --prod"
+  },
+  "dependencies": {
+    "stripe": "^16.12.0"
+  }
+}

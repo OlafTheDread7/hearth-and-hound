@@ -570,6 +570,7 @@ function updateCart(){
   const body=document.getElementById('cartBody');
   const foot=document.getElementById('cartFoot');
   if(ids.length===0){
+    saveCart();
     body.innerHTML=`<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 6h15l-1.5 9h-12L6 6Z"/><path d="M6 6 5 3H2"/><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/></svg><p>Your cart is empty.<br>Let's find something cozy.</p></div>`;
     foot.style.display='none';return;
   }
@@ -595,6 +596,7 @@ function updateCart(){
   if(subtotal>=SHIP_THRESHOLD){note.textContent='🎉 You\'ve unlocked free shipping!';}
   else{note.textContent=`Add ${money(SHIP_THRESHOLD-subtotal)} more for free shipping.`;}
   foot.style.display='block';
+  saveCart();
 }
 
 function openCart(){document.getElementById('drawer').classList.add('open');document.getElementById('overlay').classList.add('open');}
@@ -607,11 +609,43 @@ function showToast(msg){
   clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),2200);
 }
 function subscribe(e){e.preventDefault();e.target.reset();showToast('You\'re in! Check your inbox for 10% off.');}
-function checkout(){showToast('Demo store — connect a payment provider to go live.');}
+
+// Real checkout: send the cart to our backend, which creates a Stripe Checkout
+// Session with server-side prices, then redirect the customer to Stripe.
+async function checkout(){
+  const items=Object.keys(cart).map(id=>({id,qty:cart[id]}));
+  if(items.length===0)return;
+  const btn=document.querySelector('#cartFoot .btn-primary');
+  const label=btn.textContent;btn.disabled=true;btn.textContent='Redirecting…';
+  try{
+    const res=await fetch('/api/checkout',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({items})});
+    const data=await res.json();
+    if(data.url){window.location.href=data.url;return;}
+    throw new Error(data.error||'Checkout failed');
+  }catch(err){
+    showToast('Sorry — checkout is unavailable right now.');
+    btn.disabled=false;btn.textContent=label;
+  }
+}
+
+// Persist the cart so a canceled checkout keeps the customer's items.
+function saveCart(){try{localStorage.setItem('hh_cart',JSON.stringify(cart));}catch(e){}}
+function loadCart(){try{cart=JSON.parse(localStorage.getItem('hh_cart'))||{};}catch(e){cart={};}}
+
+// Handle return from Stripe.
+function handleReturn(){
+  const q=new URLSearchParams(location.search);
+  if(q.get('success')==='true'){cart={};saveCart();updateCart();showToast('Thank you! Your order is confirmed. 🐾');
+    history.replaceState({},'',location.pathname);}
+  else if(q.get('canceled')==='true'){showToast('Checkout canceled — your cart is saved.');
+    history.replaceState({},'',location.pathname);}
+}
 
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeCart();closeModal();}});
+loadCart();
 renderProducts();
 updateCart();
+handleReturn();
 </script>
 </body>
 </html>
