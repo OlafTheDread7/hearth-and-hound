@@ -5,13 +5,17 @@ checkout and **automated CJdropshipping** fulfillment, deployed on **Vercel**.
 
 ```
 hearth-and-hound/
-├── index.html              # storefront (static frontend)
+├── index.html              # storefront (reads products.json for display)
+├── products.json           # SINGLE SOURCE OF TRUTH: catalog + prices + CJ variant IDs
 ├── api/
 │   ├── checkout.js         # POST /api/checkout  -> creates a Stripe Checkout Session
 │   ├── webhook.js          # POST /api/webhook   -> on payment, places the CJ order
 │   └── _lib/
-│       ├── catalog.js      # server-authoritative prices + CJ variant mapping
+│       ├── catalog.js      # loads products.json -> server-authoritative prices/VIDs
 │       └── cj.js           # CJdropshipping API client
+├── scripts/
+│   ├── import-cj.js        # pulls CJ product data + photos into products.json
+│   └── import.config.example.json  # copy to import.config.json and list your CJ pids
 ├── package.json
 ├── .env.example            # copy to .env.local and fill in
 └── .gitignore
@@ -52,19 +56,31 @@ npm install -g vercel    # Vercel CLI, if you don't have it
 - `CJ_EMAIL` — your account email
 - `CJ_API_KEY` — generate an API key
 
-### 3. Map your products to CJ  ← the one manual step that matters
+### 3. Import your products from CJ  ← automated
 
-For each item you sell, open the product in CJdropshipping, pick the exact variant,
-and copy its **VID** (variant ID). Paste it into `api/_lib/catalog.js`:
+The catalog lives in one file, **`products.json`**, read by both the storefront and
+the checkout backend. Instead of pasting variant IDs by hand, generate it from your
+CJ account:
 
-```js
-ortho: { name: 'Cloud Orthopedic Dog Bed', price: 12900, cjVid: 'PASTE-CJ-VID-HERE', cjSku: '' },
+1. In CJdropshipping, find each product you want to sell and copy its **product id
+   (pid)** from the URL.
+2. Copy `scripts/import.config.example.json` → `scripts/import.config.json` and fill
+   in each product: its `pid`, your storefront `id`, marketing copy (`name`, `desc`,
+   `features`, `tag`), and either a `priceUsd` (explicit retail) or a `markup`
+   (retail = CJ cost × markup). Optionally pin a specific variant with `vid`.
+3. Run the importer with your CJ credentials:
+
+```powershell
+$env:CJ_EMAIL="you@example.com"; $env:CJ_API_KEY="xxxx"; node scripts/import-cj.js
 ```
 
-Until an item has a `cjVid` (or `cjSku`), a paid order for it will be **logged and
-held** rather than auto-fulfilled — so you'll never silently lose an order, but you
-also won't auto-ship anything that isn't mapped yet. Also confirm each `price` (in
-cents) still gives you margin over CJ's cost + shipping.
+It calls CJ's `/product/query`, then writes `products.json` with real names, photos,
+prices, and variant IDs (VIDs). It only **reads** CJ — no orders, no charges. Review
+the printed `cost → retail` line for each item to confirm your margins, then commit.
+
+> Safety net: if any purchased item is missing a `cjVid`/`cjSku` at order time, the
+> webhook **logs and holds** that order instead of auto-shipping — you never silently
+> lose a sale, and nothing unmapped ever ships.
 
 ### 4. Run locally with test payments
 

@@ -471,37 +471,32 @@
 
 <script>
 const SHIP_THRESHOLD = 50;
-const products = [
-  {id:'ortho', name:'Cloud Orthopedic Dog Bed', cat:'Beds & Comfort', price:129, was:169, tag:'best', rating:4.9, reviews:842,
-    desc:'Therapeutic CertiPUR-US® memory foam that cradles joints and pressure points — a true difference-maker for seniors and large breeds.',
-    feats:['4" solid orthopedic memory foam base','Waterproof inner liner','Machine-washable bolster cover','Non-slip grip bottom']},
-  {id:'donut', name:'Calming Donut Bed', cat:'Beds & Comfort', price:89, was:0, tag:'best', rating:4.8, reviews:1190,
-    desc:'A plush, faux-fur nest that mimics the security of a curled-up litter. The raised rim gives anxious dogs a sense of safety as they settle.',
-    feats:['Ultra-soft vegan faux fur','Self-warming recycled fill','Raised calming rim','Fully machine washable']},
-  {id:'vest', name:'Anti-Anxiety Wrap Vest', cat:'Calming & Wellness', price:39, was:49, tag:'', rating:4.6, reviews:0,
-    desc:'Gentle, constant pressure that works like a reassuring hug — easing storm, travel, and separation anxiety without medication.',
-    feats:['Adjustable snug fit','Breathable, lightweight fabric','Drug-free calming','Sizes XS–XXL']},
-  {id:'chews', name:'Calming Hemp Chews', cat:'Calming & Wellness', price:29, was:0, tag:'best', rating:4.7, reviews:2103,
-    desc:'Vet-formulated soft chews with organic hemp, chamomile, and L-theanine to take the edge off stressful moments.',
-    feats:['90 soft chews per jar','Organic hemp + chamomile','L-theanine & melatonin','Bacon flavor dogs love']},
-  {id:'lickmat', name:'Slow-Feed Lick Mat', cat:'Calming & Wellness', price:19, was:0, tag:'new', rating:4.7, reviews:0,
-    desc:'Turn mealtime into a calming ritual. Licking releases endorphins that soothe anxious dogs and slow fast eaters.',
-    feats:['Food-grade silicone','Strong suction base','Dishwasher safe','Great for crate training']},
-  {id:'blanket', name:'Self-Warming Snug Blanket', cat:'Beds & Comfort', price:34, was:44, tag:'', rating:4.8, reviews:0,
-    desc:'A reflective thermal core captures your dog\'s body heat for cozy warmth — no electricity needed.',
-    feats:['Reflective self-warming core','Plush sherpa top layer','Lightweight & portable','Machine washable']},
-  {id:'groom', name:'Pro Grooming Kit', cat:'Grooming', price:49, was:69, tag:'', rating:4.6, reviews:0,
-    desc:'A salon-quality, low-noise grooming set that keeps nervous dogs calm while you keep them looking their best.',
-    feats:['Whisper-quiet clippers','Self-cleaning deshedding brush','Nail grinder + guards','USB-C rechargeable']},
-  {id:'collar', name:'GPS Smart Collar', cat:'Tech & Safety', price:79, was:99, tag:'new', rating:4.5, reviews:0,
-    desc:'Real-time location tracking and activity monitoring, so your dog is always just a glance away on your phone.',
-    feats:['Live GPS tracking','Activity & sleep insights','14-day battery life','Waterproof IP67']},
-];
-// assign believable review counts
-const rc=[842,1190,564,2103,389,712,498,933];
-products.forEach((p,i)=>{p.reviews=rc[i];});
+// Products load from products.json (the single source of truth shared with the
+// backend). Each entry: {id,name,category,priceCents,compareAtCents,tag,rating,
+// reviews,desc,features[],image,cjVid,...}. We map it to the display shape below.
+let products = [];
+
+async function loadProducts(){
+  try{
+    const res=await fetch('products.json',{cache:'no-store'});
+    const data=await res.json();
+    products=data.map(p=>({
+      id:p.id, name:p.name, cat:p.category||'', tag:p.tag||'',
+      rating:p.rating||4.7, reviews:p.reviews||0,
+      price:(p.priceCents||0)/100, was:(p.compareAtCents||0)/100,
+      desc:p.desc||'', feats:p.features||[], image:p.image||''
+    }));
+  }catch(e){ products=[]; console.error('Could not load products.json',e); }
+}
+
+// Product imagery: real photo if present, otherwise a branded SVG illustration.
+function imgHTML(p){
+  if(p&&p.image){return `<img src="${p.image}" alt="${p.name}" loading="lazy" style="width:100%;height:100%;object-fit:cover">`;}
+  return (p&&art[p.id])||art._fallback;
+}
 
 const art = {
+  _fallback:`<svg viewBox='0 0 120 120'><circle cx='60' cy='58' r='30' fill='#6b5a45'/><path d='M42 40c-3-8-1-14 3-13 3 1 5 7 4 14l-7-1Z' fill='#6b5a45'/><path d='M78 40c3-8 1-14-3-13-3 1-5 7-4 14l7-1Z' fill='#6b5a45'/><circle cx='52' cy='56' r='2.6' fill='#2c2620'/><circle cx='68' cy='56' r='2.6' fill='#2c2620'/><ellipse cx='60' cy='64' rx='3.4' ry='2.4' fill='#2c2620'/><path d='M60 67c0 4-3 6-7 6m7-6c0 4 3 6 7 6' stroke='#2c2620' stroke-width='1.4' fill='none'/></svg>`,
   ortho:`<svg viewBox='0 0 120 120'><rect x='14' y='62' width='92' height='40' rx='12' fill='#5a6b4f'/><rect x='20' y='56' width='80' height='30' rx='14' fill='#7d8c70'/><ellipse cx='60' cy='74' rx='22' ry='15' fill='#6b5a45'/><path d='M44 62c-3-7-1-12 2-11 3 1 4 6 4 11l-6 0Z' fill='#6b5a45'/><path d='M76 62c3-7 1-12-2-11-3 1-4 6-4 11l6 0Z' fill='#6b5a45'/><circle cx='53' cy='72' r='2' fill='#2c2620'/><circle cx='67' cy='72' r='2' fill='#2c2620'/><ellipse cx='60' cy='79' rx='3' ry='2' fill='#2c2620'/></svg>`,
   donut:`<svg viewBox='0 0 120 120'><ellipse cx='60' cy='78' rx='44' ry='30' fill='#c0794f'/><ellipse cx='60' cy='74' rx='30' ry='20' fill='#e3b48c'/><ellipse cx='60' cy='76' rx='22' ry='14' fill='#6b5a45'/><circle cx='53' cy='74' r='2.4' fill='#2c2620'/><circle cx='67' cy='74' r='2.4' fill='#2c2620'/><ellipse cx='60' cy='81' rx='3' ry='2' fill='#2c2620'/></svg>`,
   vest:`<svg viewBox='0 0 120 120'><ellipse cx='60' cy='84' rx='30' ry='16' fill='#5a6b4f'/><rect x='40' y='60' width='40' height='30' rx='12' fill='#7d8c70'/><circle cx='60' cy='44' r='18' fill='#6b5a45'/><path d='M48 32c-2-6-1-10 2-9 2 1 3 5 3 9l-5 0Z' fill='#6b5a45'/><path d='M72 32c2-6 1-10-2-9-2 1-3 5-3 9l5 0Z' fill='#6b5a45'/><circle cx='55' cy='44' r='2' fill='#2c2620'/><circle cx='65' cy='44' r='2' fill='#2c2620'/><ellipse cx='60' cy='50' rx='2.6' ry='1.8' fill='#2c2620'/></svg>`,
@@ -514,7 +509,7 @@ const art = {
 
 let cart = {};
 
-function money(n){return '$'+n.toLocaleString()}
+function money(n){return '$'+(Number.isInteger(n)?n.toLocaleString():n.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}));}
 function stars(r){const full=Math.round(r);return '★★★★★'.slice(0,full)+'☆☆☆☆☆'.slice(0,5-full);}
 
 function renderProducts(){
@@ -522,7 +517,7 @@ function renderProducts(){
     <div class="card" onclick="openModal('${p.id}')">
       <div class="card-img" style="background:linear-gradient(150deg,#efe4d1,#e2e7d8)">
         ${p.tag?`<span class="tag ${p.tag}">${p.tag==='best'?'Best Seller':p.tag==='new'?'New':''}</span>`:''}
-        ${art[p.id]}
+        ${imgHTML(p)}
       </div>
       <div class="card-body">
         <div class="card-cat">${p.cat}</div>
@@ -540,7 +535,7 @@ function openModal(id){
   const p=products.find(x=>x.id===id);
   document.getElementById('modalInner').innerHTML=`
     <button class="x" onclick="closeModal()">×</button>
-    <div class="modal-art">${art[p.id]}</div>
+    <div class="modal-art">${imgHTML(p)}</div>
     <div class="modal-info">
       <div class="card-cat">${p.cat}</div>
       <h2>${p.name}</h2>
@@ -576,7 +571,7 @@ function updateCart(){
   }
   body.innerHTML=ids.map(id=>{const p=products.find(x=>x.id===id);return`
     <div class="citem">
-      <div class="citem-img">${art[id]}</div>
+      <div class="citem-img">${imgHTML(p)}</div>
       <div class="citem-info">
         <h4>${p.name}</h4>
         <div class="cprice">${money(p.price)}</div>
@@ -642,10 +637,13 @@ function handleReturn(){
 }
 
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeCart();closeModal();}});
-loadCart();
-renderProducts();
-updateCart();
-handleReturn();
+(async function init(){
+  loadCart();
+  await loadProducts();
+  renderProducts();
+  updateCart();
+  handleReturn();
+})();
 </script>
 </body>
 </html>

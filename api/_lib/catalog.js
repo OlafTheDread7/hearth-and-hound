@@ -1,26 +1,23 @@
-// Server-side authoritative catalog.
-// The browser only ever sends { id, qty }. All prices and supplier mappings
-// live here so a customer can NEVER tamper with the amount they're charged.
+// Server-side authoritative catalog, sourced from the single products.json file
+// (the same file the storefront reads). The browser only ever sends { id, qty };
+// all prices and supplier mappings are resolved here so a customer can NEVER
+// tamper with the amount charged.
 //
-// price  = amount charged to the customer, in CENTS (USD).
-// cjVid  = CJdropshipping variant ID (VID) for the exact variant you sell.
-//          Get this from CJ: find the product → open the variant → copy its VID,
-//          OR call CJ's product/listV2 / variant endpoints. Leave "" until mapped;
-//          orders for unmapped items will be flagged (not silently dropped).
-// cjSku  = optional CJ SKU. CJ accepts vid OR sku; vid is preferred.
-//
-// NOTE: keep `id`, names, and prices in sync with the catalog in index.html.
+// products.json is generated/updated by scripts/import-cj.js from your CJ account.
+// `require` (not fs.read) ensures Vercel bundles products.json with the function.
 
-const CATALOG = {
-  ortho:   { name: 'Cloud Orthopedic Dog Bed',   price: 12900, cjVid: '', cjSku: '' },
-  donut:   { name: 'Calming Donut Bed',          price:  8900, cjVid: '', cjSku: '' },
-  vest:    { name: 'Anti-Anxiety Wrap Vest',     price:  3900, cjVid: '', cjSku: '' },
-  chews:   { name: 'Calming Hemp Chews',         price:  2900, cjVid: '', cjSku: '' },
-  lickmat: { name: 'Slow-Feed Lick Mat',         price:  1900, cjVid: '', cjSku: '' },
-  blanket: { name: 'Self-Warming Snug Blanket',  price:  3400, cjVid: '', cjSku: '' },
-  groom:   { name: 'Pro Grooming Kit',           price:  4900, cjVid: '', cjSku: '' },
-  collar:  { name: 'GPS Smart Collar',           price:  7900, cjVid: '', cjSku: '' },
-};
+const PRODUCTS = require('../../products.json');
+
+// Build a lookup keyed by product id.  price is in CENTS.
+const CATALOG = {};
+for (const p of PRODUCTS) {
+  CATALOG[p.id] = {
+    name: p.name,
+    price: p.priceCents,
+    cjVid: p.cjVid || '',
+    cjSku: p.cjSku || '',
+  };
+}
 
 // Free shipping at/above this subtotal (in cents); otherwise a flat fee is added.
 const FREE_SHIPPING_THRESHOLD = 5000; // $50.00

@@ -1,0 +1,117 @@
+{
+  "_comment": "pids filled in by product search on CJdropshipping. 7 of 8 mapped. `chews` is left blank on purpose — CJ's ingestible calming-supplement inventory is thin/regulated; source that one manually and paste its pid here. Delete `priceUsd` on an item to price off CJ cost x markup instead.",
+
+  "defaultMarkup": 3,
+
+  "products": [
+    {
+      "id": "ortho",
+      "pid": "1450275073415057408",
+      "vid": "",
+      "name": "Cloud Orthopedic Dog Bed",
+      "category": "Beds & Comfort",
+      "tag": "best",
+      "rating": 4.9,
+      "reviews": 842,
+      "priceUsd": 129,
+      "compareAtUsd": 169,
+      "desc": "Therapeutic memory-foam-style cushion that cradles joints and pressure points — a difference-maker for seniors and large breeds.",
+      "features": ["Removable, washable cover", "Scratch-resistant linen", "Supportive cushion base", "Non-slip bottom"]
+    },
+    {
+      "id": "donut",
+      "pid": "4BB39C1C-2AF0-4CC3-9D66-BAA427505625",
+      "vid": "",
+      "name": "Calming Donut Bed",
+      "category": "Beds & Comfort",
+      "tag": "best",
+      "rating": 4.8,
+      "reviews": 1190,
+      "priceUsd": 89,
+      "desc": "A plush, round nest that mimics the security of a curled-up litter. The raised rim gives anxious dogs a sense of safety.",
+      "features": ["Ultra-soft plush faux fur", "Self-warming fill", "Raised calming rim", "Machine washable"]
+    },
+    {
+      "id": "vest",
+      "pid": "1422045026183155712",
+      "vid": "",
+      "name": "Anti-Anxiety Wrap Vest",
+      "category": "Calming & Wellness",
+      "tag": "",
+      "rating": 4.6,
+      "reviews": 564,
+      "priceUsd": 39,
+      "compareAtUsd": 49,
+      "desc": "Gentle, constant pressure that works like a reassuring hug — easing storm, travel, and separation anxiety without medication.",
+      "features": ["Adjustable snug fit", "Breathable fabric", "Drug-free calming", "Multiple sizes"]
+    },
+    {
+      "id": "chews",
+      "pid": "PASTE-CJ-PRODUCT-ID-HERE",
+      "vid": "",
+      "name": "Calming Hemp Chews",
+      "category": "Calming & Wellness",
+      "tag": "best",
+      "rating": 4.7,
+      "reviews": 2103,
+      "priceUsd": 29,
+      "desc": "Vet-formulated soft chews with organic hemp, chamomile, and L-theanine to take the edge off stressful moments.",
+      "features": ["90 soft chews per jar", "Organic hemp + chamomile", "L-theanine & melatonin", "Bacon flavor dogs love"]
+    },
+    {
+      "id": "lickmat",
+      "pid": "1721808426021834752",
+      "vid": "",
+      "name": "Slow-Feed Lick Mat",
+      "category": "Calming & Wellness",
+      "tag": "new",
+      "rating": 4.7,
+      "reviews": 389,
+      "priceUsd": 19,
+      "desc": "Turn mealtime into a calming ritual. Licking releases endorphins that soothe anxious dogs and slow fast eaters.",
+      "features": ["Food-grade silicone", "Strong suction base", "Dishwasher safe", "Great for crate training"]
+    },
+    {
+      "id": "blanket",
+      "pid": "1857612148038848512",
+      "vid": "",
+      "name": "Self-Warming Snug Blanket",
+      "category": "Beds & Comfort",
+      "tag": "",
+      "rating": 4.8,
+      "reviews": 712,
+      "priceUsd": 34,
+      "compareAtUsd": 44,
+      "desc": "A cozy corduroy-fleece mat that traps your dog's body heat for warmth — no electricity needed.",
+      "features": ["Self-warming design", "Plush corduroy fleece", "Lightweight & portable", "Machine washable"]
+    },
+    {
+      "id": "groom",
+      "pid": "97A666E3-20B5-4ABE-90DB-BC95FDF3EBC6",
+      "vid": "",
+      "name": "Grooming Scissor & Nail Set",
+      "category": "Grooming",
+      "tag": "",
+      "rating": 4.6,
+      "reviews": 498,
+      "priceUsd": 39,
+      "compareAtUsd": 59,
+      "desc": "A dog-specific grooming set that keeps nervous dogs calm while you keep them looking their best.",
+      "features": ["Rounded-tip safety scissors", "Nail clipper included", "Ergonomic grip", "Dog-specific design"]
+    },
+    {
+      "id": "collar",
+      "pid": "1506862833064226816",
+      "vid": "",
+      "name": "GPS Smart Tracker Collar",
+      "category": "Tech & Safety",
+      "tag": "new",
+      "rating": 4.5,
+      "reviews": 933,
+      "priceUsd": 79,
+      "compareAtUsd": 99,
+      "desc": "A durable leather collar with a tracker mount, so your dog is always just a glance away.",
+      "features": ["Location tracker mount", "Genuine leather collar", "Adjustable fit", "Everyday durability"]
+    }
+  ]
+}

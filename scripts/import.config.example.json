@@ -1,0 +1,36 @@
+{
+  "_comment": "Copy this file to scripts/import.config.json and fill it in. For each product you want to sell, paste the CJ product id (pid) from the product's CJdropshipping URL. Optionally pin a specific variant with `vid`. Retail price = CJ cost x markup, unless you set `priceUsd` explicitly. Your marketing copy (name, desc, features, tag, rating) overrides CJ's raw data on the storefront.",
+
+  "defaultMarkup": 3,
+
+  "products": [
+    {
+      "id": "ortho",
+      "pid": "PASTE-CJ-PRODUCT-ID-HERE",
+      "vid": "",
+      "name": "Cloud Orthopedic Dog Bed",
+      "category": "Beds & Comfort",
+      "tag": "best",
+      "rating": 4.9,
+      "reviews": 842,
+      "markup": 3,
+      "priceUsd": 129,
+      "compareAtUsd": 169,
+      "desc": "Therapeutic CertiPUR-US® memory foam that cradles joints and pressure points — a true difference-maker for seniors and large breeds.",
+      "features": ["4\" solid orthopedic memory foam base", "Waterproof inner liner", "Machine-washable bolster cover", "Non-slip grip bottom"]
+    },
+    {
+      "id": "chews",
+      "pid": "PASTE-CJ-PRODUCT-ID-HERE",
+      "vid": "",
+      "name": "Calming Hemp Chews",
+      "category": "Calming & Wellness",
+      "tag": "best",
+      "rating": 4.7,
+      "reviews": 2103,
+      "markup": 3.5,
+      "desc": "Vet-formulated soft chews with organic hemp, chamomile, and L-theanine to take the edge off stressful moments.",
+      "features": ["90 soft chews per jar", "Organic hemp + chamomile", "L-theanine & melatonin", "Bacon flavor dogs love"]
+    }
+  ]
+}
