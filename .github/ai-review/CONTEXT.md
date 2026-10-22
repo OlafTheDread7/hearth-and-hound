@@ -1,0 +1,28 @@
+# hearth-and-hound: reviewer context
+
+- **What it is:** Hearth & Hound, a dog-wellness dropshipping storefront (README domain: hearth-hound.com). The repo is **public** on GitHub, so everything committed can be read by anyone. It deploys to Vercel with no `vercel.json` and no build step, so Vercel's zero-config defaults apply: static files at the repo root (`index.html`, `products.json`, `BingSiteAuth.xml`, and also `README.md`, `scripts/` and so on) are served publicly, and each file in `api/*.js` becomes a Node function. `api/_lib/` is skipped because of its underscore prefix. The only dependency is `stripe` (`^16.12.0`, locked at 16.12.0).
+- **Entry points:**
+  - `index.html`: a single-page storefront with inline JS. It fetches `/products.json`, keeps the cart in localStorage `hh_cart` as `{id: qty}`, and POSTs `{items:[{id,qty}]}` to `/api/checkout`, then redirects to the returned `url`. On return it reads `?success=true` and `?canceled=true`.
+  - `api/checkout.js`: POST only. It creates the Stripe Checkout Session.
+  - `api/webhook.js`: POST only. It handles `checkout.session.completed`, re-retrieves the session from Stripe and places a CJ `createOrderV2` order.
+  - `api/_lib/catalog.js`: loads `products.json` via `require`.
+  - `api/_lib/cj.js`: the CJ API v2 client, with the access token cached in module scope.
+  - `scripts/import-cj.js`: run locally. It reads `scripts/import.config.json` and rewrites `products.json` from CJ.
+- **Money flow:**
+  - The server charges only `products.json` `priceCents`, looked up via `CATALOG[id]`. Quantity is clamped to 1-99 and unknown ids are skipped.
+  - Shipping is free at or above `FREE_SHIPPING_THRESHOLD` (5000 cents), otherwise `FLAT_SHIPPING_FEE` (595). Both are in `catalog.js`.
+  - Allowed shipping countries are US, CA, GB and AU, currency is USD, and phone is collected.
+  - The cart goes to Stripe as `metadata.cart` (JSON of `{id, qty}`).
+  - The webhook maps each id to `cjVid` (or `cjSku`) and sends `orderNumber = session.id`, `payType = CJ_PAY_TYPE` (2 means CJ charges the CJ balance automatically) and `isSandbox` from `CJ_SANDBOX`.
+- **`products.json` is the single source of truth.** The storefront reads it for display and the backend reads it for prices and CJ mapping. Its field names (`id`, `name`, `category`, `priceCents`, `compareAtCents`, `tag`, `rating`, `reviews`, `desc`, `features`, `image`, `cjVid`, `cjSku`, `cjPid`) are a contract shared by `import-cj.js`, `catalog.js` and `index.html`. Product `id` values are stored in customers' localStorage carts and in Stripe metadata, so renaming or removing an id affects carts already in progress.
+- **Duplicated constant:** `index.html` has its own `SHIP_THRESHOLD = 50` (dollars) for the "free shipping" note, separate from `catalog.js` `FREE_SHIPPING_THRESHOLD = 5000` (cents). Change both together.
+- **Env var names (a contract):**
+  - `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `CJ_EMAIL`, `CJ_API_KEY`.
+  - `CJ_LOGISTIC_NAME` (default `CJPacket Ordinary`), `CJ_FROM_COUNTRY` (default `CN`), `CJ_PAY_TYPE` (default `2`), `CJ_SANDBOX` (`'1'` means sandbox).
+  - `.env`, `.env.local` and `.env.*.local` are gitignored. `.env.example` holds placeholders only, and git history holds no real keys.
+- **The webhook needs the raw body.** `module.exports.config = { api: { bodyParser: false } }` and `readRawBody()` must stay, so that `stripe.webhooks.constructEvent` can check the signature.
+- **Front end:**
+  - All rendering builds template strings into `innerHTML` from `products.json` data (CJ image URLs, plus copy from `import.config.json`), so `products.json` content is treated as trusted HTML.
+  - The only third-party resource is the Google Fonts stylesheet. No third-party scripts load, and card entry is on Stripe-hosted Checkout.
+  - The newsletter form (`subscribe()`) is client-side only and has no backend.
+- **Public by design:** `products.json`, including CJ pid, vid and sku and the CJ CDN image URLs; `BingSiteAuth.xml`; and `scripts/import.config.json`, which holds CJ product ids only, no credentials.
